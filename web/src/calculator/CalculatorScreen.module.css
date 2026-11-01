@@ -1,0 +1,129 @@
+/* The calculator card: the display, the message line and the 4-column keypad,
+   in the style of the design's "Look and feel". */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-calculator);
+}
+
+.display {
+  display: block;
+  min-height: 64px;
+  padding: var(--space-3);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  color: var(--color-text);
+  font-family: var(--font-family);
+  font-size: var(--font-size-display);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+  line-height: 1.2;
+  text-align: right;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.message {
+  min-height: 1.5em;
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 14px;
+}
+
+.messageError {
+  color: var(--color-error);
+}
+
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-1);
+}
+
+.key {
+  min-height: 48px;
+  padding: var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-family);
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color var(--transition-colour),
+    border-color var(--transition-colour),
+    color var(--transition-colour),
+    transform var(--transition-colour);
+}
+
+.key:hover:not(:disabled) {
+  background: var(--color-background);
+}
+
+.key:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.key:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.key:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Operator buttons: light blue with dark blue text. */
+.operator {
+  background: var(--color-operator-surface);
+  border-color: var(--color-operator-surface);
+  color: var(--color-operator-text);
+}
+
+.operator:hover:not(:disabled) {
+  background: #bfdbfe;
+}
+
+/* The equals button is the primary blue, spanning two rows on the right. */
+.equals {
+  grid-column: 4;
+  grid-row: 3 / span 2;
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #ffffff;
+}
+
+.equals:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+}
+
+/* The clear button is white with error-coloured text. */
+.clear {
+  background: var(--color-surface);
+  color: var(--color-error);
+}
+
+.clear:hover:not(:disabled) {
+  background: #fef2f2;
+}
+
+/* The keypad keeps its 4-column grid on a phone, with taller buttons. */
+@media (max-width: 640px) {
+  .display {
+    font-size: var(--font-size-display-phone);
+  }
+
+  .key {
+    min-height: 56px;
+  }
+}
