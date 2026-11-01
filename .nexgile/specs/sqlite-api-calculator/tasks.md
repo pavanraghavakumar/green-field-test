@@ -13,6 +13,7 @@
     - _Verify: npm test_
     - _Verify: npm run test --workspace server -- health_
     - _Verify: npm run test --workspace web -- App_
+    - _Issue: #1_
   - [ ] 1.2 API: save a calculation and read the history
     - Add `POST /api/calculations` taking `{"left", "operator", "right"}`, doing the arithmetic for `+`, `−`, `×` and `÷`, saving the row with its expression, result and UTC time, and answering `201` with the saved calculation.
     - Refuse division by zero with `400` and `{"error": "Division by zero is not allowed"}` and write nothing; refuse an unknown operator or a body that is not two numbers with `400`.
@@ -22,6 +23,7 @@
     - _Depends: 1.1_
     - _Files: server/main.py, server/db.py, server/calculations.py, server/tests/test_calculations.py_
     - _Verify: npm run test --workspace server -- calculations_
+    - _Issue: #2_
   - [ ] 1.3 Web app: the calculator screen
     - Build `CalculatorScreen` with the display above a 4-column keypad of digit buttons 0 to 9, `.`, `+`, `−`, `×`, `÷`, `=` and `C`, and a message line under the display.
     - Keep the first number, the operator and the second number in state: digits append to the display, an operator keeps the first number and empties the display, `=` calls `saveCalculation` and shows the result, `C` empties the display and forgets the first number and the operator.
@@ -32,6 +34,7 @@
     - _Depends: 1.1_
     - _Files: web/src/calculator/**, web/src/api.js, web/src/App.jsx_
     - _Verify: npm run test --workspace web -- CalculatorScreen_
+    - _Issue: #3_
   - [ ] 1.4 Web app: the history list
     - Build `HistoryList` showing the saved calculations newest first, each row with the expression on the left and the result and the time in the User's local time zone on the right, loaded with `loadHistory` when the page opens.
     - Show "History could not be loaded" with an empty list when the read fails, and "Calculation not saved" beside the list when a save fails.
@@ -41,6 +44,7 @@
     - _Depends: 1.1_
     - _Files: web/src/history/**, web/src/api.js, web/src/App.jsx_
     - _Verify: npm run test --workspace web -- HistoryList_
+    - _Issue: #4_
   - [ ] 1.5 Web app: the page layout on a desktop and a phone
     - Lay the calculator card and the history card out side by side on a desktop, at most 960px wide and centred, and one above the other on a phone, both full width, in `web/src/App.module.css`.
     - Keep the keypad a 4-column grid with buttons at least 56px tall on a phone, and show all text in English.
@@ -49,6 +53,7 @@
     - _Depends: 1.1_
     - _Files: web/src/App.jsx, web/src/App.module.css, web/src/App.test.jsx, web/src/main.jsx_
     - _Verify: npm run test --workspace web -- App_
+    - _Issue: #5_
   - [ ] 1.6 Deployment setup
     - Write what the User's local server needs to build and run the app there: a `Dockerfile` that builds the React files and runs the FastAPI app with Uvicorn, a `.dockerignore`, and a `docker-compose.prod.yml` whose app image is `sqlite-api-calculator:${APP_TAG}`, with a named volume for the SQLite file.
     - The start command runs the database setup first, then Uvicorn; secrets and the port are read from environment variables, never written in a file.
@@ -59,3 +64,4 @@
     - _Files: Dockerfile, .dockerignore, docker-compose.prod.yml_
     - _Verify: docker compose -f docker-compose.prod.yml config --quiet --no-interpolate_
     - _Verify: docker build -t sqlite-api-calculator:verify ._
+    - _Issue: #6_
