@@ -1,7 +1,7 @@
 # Tasks: SQLite API Calculator
 
 - [ ] 1. Project setup
-  - [ ] 1.1 Project setup
+  - [x] 1.1 Project setup
     - Create the skeleton: a root `package.json` whose scripts are `install`, `test` and `dev`, the React web app in `web/` built with Vite, the Python API in `server/` with FastAPI and Uvicorn, and the SQLite schema in `server/db.py` creating the `calculations` table on startup.
     - Write `README.md` with the commands of `## Build and run`, a `.gitignore` that includes `.env`, `node_modules/`, `web/dist/` and `server/.venv/`, and `server/requirements.txt`.
     - Add the health path `GET /api/health` answering `200` with `{"status": "ok"}`, and the shared stylesheet `web/src/styles.css` with the colours and the font of `## Look and feel` as CSS variables.
