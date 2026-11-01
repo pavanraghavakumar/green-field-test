@@ -4,3 +4,26 @@
 .nexgile/greenfield/checkpoints/
 .nexgile/greenfield/mockups/
 docs/input/
+
+# Secrets and local settings
+.env
+.env.*
+!.env.example
+
+# Node packages and the built web app
+node_modules/
+web/dist/
+
+# The Python API's virtual environment and its SQLite file
+server/.venv/
+server/calculations.db
+server/calculations.db-journal
+server/calculations.db-wal
+server/calculations.db-shm
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Test output
+test-results/
+playwright-report/

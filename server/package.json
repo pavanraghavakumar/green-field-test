@@ -1,0 +1,10 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "The FastAPI API of the SQLite API Calculator.",
+  "scripts": {
+    "test": "node scripts/test.js",
+    "dev": "node scripts/dev.js"
+  }
+}
