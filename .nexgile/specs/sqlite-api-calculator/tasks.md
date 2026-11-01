@@ -1,0 +1,61 @@
+# Tasks: SQLite API Calculator
+
+- [ ] 1. Project setup
+  - [ ] 1.1 Project setup
+    - Create the skeleton: a root `package.json` whose scripts are `install`, `test` and `dev`, the React web app in `web/` built with Vite, the Python API in `server/` with FastAPI and Uvicorn, and the SQLite schema in `server/db.py` creating the `calculations` table on startup.
+    - Write `README.md` with the commands of `## Build and run`, a `.gitignore` that includes `.env`, `node_modules/`, `web/dist/` and `server/.venv/`, and `server/requirements.txt`.
+    - Add the health path `GET /api/health` answering `200` with `{"status": "ok"}`, and the shared stylesheet `web/src/styles.css` with the colours and the font of `## Look and feel` as CSS variables.
+    - Add `@playwright/test` as a dev dependency and an `e2e/` folder holding a `.gitkeep`, left out of the vitest run.
+    - Write one passing test for each side: `server/tests/test_health.py` with pytest and FastAPI's `TestClient` on a SQLite file in a temporary folder, and `web/src/App.test.jsx` with vitest and React Testing Library.
+    - _Requirements: 3.5_
+    - _Files: package.json, README.md, .gitignore, server/**, web/**, e2e/.gitkeep_
+    - _Verify: npm install_
+    - _Verify: npm test_
+    - _Verify: npm run test --workspace server -- health_
+    - _Verify: npm run test --workspace web -- App_
+  - [ ] 1.2 API: save a calculation and read the history
+    - Add `POST /api/calculations` taking `{"left", "operator", "right"}`, doing the arithmetic for `+`, `−`, `×` and `÷`, saving the row with its expression, result and UTC time, and answering `201` with the saved calculation.
+    - Refuse division by zero with `400` and `{"error": "Division by zero is not allowed"}` and write nothing; refuse an unknown operator or a body that is not two numbers with `400`.
+    - Add `GET /api/history` answering `200` with the saved calculations, newest first.
+    - Write `server/tests/test_calculations.py` covering the four operations, division by zero, a bad body, the saved row and the history order, each test on a SQLite file in a temporary folder.
+    - _Requirements: 1.4, 1.5, 1.6, 1.7, 1.8, 1.10, 2.1, 2.3, 2.4, 2.7_
+    - _Depends: 1.1_
+    - _Files: server/main.py, server/db.py, server/calculations.py, server/tests/test_calculations.py_
+    - _Verify: npm run test --workspace server -- calculations_
+  - [ ] 1.3 Web app: the calculator screen
+    - Build `CalculatorScreen` with the display above a 4-column keypad of digit buttons 0 to 9, `.`, `+`, `−`, `×`, `÷`, `=` and `C`, and a message line under the display.
+    - Keep the first number, the operator and the second number in state: digits append to the display, an operator keeps the first number and empties the display, `=` calls `saveCalculation` and shows the result, `C` empties the display and forgets the first number and the operator.
+    - Show "Division by zero is not allowed" on the display when the API refuses, and keep the result with "Calculation not saved" beside the history list when the save fails.
+    - Style the screen in `web/src/calculator/CalculatorScreen.module.css` in the style of `## Look and feel`: the calculator card, the display with tabular figures, the digit, operator, equals and clear buttons with their hover, focus, pressed and disabled states.
+    - Write `web/src/calculator/CalculatorScreen.test.jsx` with vitest and React Testing Library, with the API calls mocked, covering the keypad, the display, the four worked examples, the clear button and the division-by-zero message.
+    - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 1.10, 2.6_
+    - _Depends: 1.1_
+    - _Files: web/src/calculator/**, web/src/api.js, web/src/App.jsx_
+    - _Verify: npm run test --workspace web -- CalculatorScreen_
+  - [ ] 1.4 Web app: the history list
+    - Build `HistoryList` showing the saved calculations newest first, each row with the expression on the left and the result and the time in the User's local time zone on the right, loaded with `loadHistory` when the page opens.
+    - Show "History could not be loaded" with an empty list when the read fails, and "Calculation not saved" beside the list when a save fails.
+    - Style the list in `web/src/history/HistoryList.module.css` in the style of `## Look and feel`: rows separated by 1px borders, muted result and time, the newest row at the top.
+    - Write `web/src/history/HistoryList.test.jsx` with vitest and React Testing Library, with the API calls mocked, covering the rows, their order, the local time and the two messages.
+    - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 3.4_
+    - _Depends: 1.1_
+    - _Files: web/src/history/**, web/src/api.js, web/src/App.jsx_
+    - _Verify: npm run test --workspace web -- HistoryList_
+  - [ ] 1.5 Web app: the page layout on a desktop and a phone
+    - Lay the calculator card and the history card out side by side on a desktop, at most 960px wide and centred, and one above the other on a phone, both full width, in `web/src/App.module.css`.
+    - Keep the keypad a 4-column grid with buttons at least 56px tall on a phone, and show all text in English.
+    - Write `web/src/App.test.jsx` with vitest and React Testing Library, with the API calls mocked, covering the page at `/` showing the calculator and the history list.
+    - _Requirements: 1.1, 2.2, 3.1, 3.2, 3.3, 3.4_
+    - _Depends: 1.1_
+    - _Files: web/src/App.jsx, web/src/App.module.css, web/src/App.test.jsx, web/src/main.jsx_
+    - _Verify: npm run test --workspace web -- App_
+  - [ ] 1.6 Deployment setup
+    - Write what the User's local server needs to build and run the app there: a `Dockerfile` that builds the React files and runs the FastAPI app with Uvicorn, a `.dockerignore`, and a `docker-compose.prod.yml` whose app image is `sqlite-api-calculator:${APP_TAG}`, with a named volume for the SQLite file.
+    - The start command runs the database setup first, then Uvicorn; secrets and the port are read from environment variables, never written in a file.
+    - _Requirements: 3.5_
+    - _Depends: 1.1, 1.2, 1.3, 1.4, 1.5_
+    - _Mode: devops_
+    - _Area: deploy_
+    - _Files: Dockerfile, .dockerignore, docker-compose.prod.yml_
+    - _Verify: docker compose -f docker-compose.prod.yml config --quiet --no-interpolate_
+    - _Verify: docker build -t sqlite-api-calculator:verify ._
