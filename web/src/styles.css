@@ -1,0 +1,62 @@
+/* Shared stylesheet: the colours, the font and the spacing of the design's
+   "Look and feel", as CSS variables every screen uses. */
+:root {
+  --color-background: #f4f6fb;
+  --color-surface: #ffffff;
+  --color-text: #1f2937;
+  --color-text-muted: #6b7280;
+  --color-primary: #2563eb;
+  --color-primary-hover: #1d4ed8;
+  --color-error: #dc2626;
+  --color-success: #16a34a;
+  --color-border: #e5e7eb;
+
+  --color-operator-surface: #dbeafe;
+  --color-operator-text: #1e40af;
+
+  --font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-size-display: 40px;
+  --font-size-display-phone: 32px;
+
+  --space-1: 8px;
+  --space-2: 12px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+
+  --radius-card: 12px;
+  --radius-calculator: 16px;
+
+  --page-padding: 40px;
+  --page-padding-phone: 24px;
+  --transition-colour: 150ms;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-family);
+  line-height: 1.5;
+}
+
+.app {
+  padding: var(--page-padding);
+}
+
+@media (max-width: 640px) {
+  .app {
+    padding: var(--page-padding-phone);
+  }
+}
