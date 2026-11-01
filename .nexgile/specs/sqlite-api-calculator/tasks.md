@@ -14,7 +14,7 @@
     - _Verify: npm run test --workspace server -- health_
     - _Verify: npm run test --workspace web -- App_
     - _Issue: #1_
-  - [ ] 1.2 API: save a calculation and read the history
+  - [x] 1.2 API: save a calculation and read the history
     - Add `POST /api/calculations` taking `{"left", "operator", "right"}`, doing the arithmetic for `+`, `−`, `×` and `÷`, saving the row with its expression, result and UTC time, and answering `201` with the saved calculation.
     - Refuse division by zero with `400` and `{"error": "Division by zero is not allowed"}` and write nothing; refuse an unknown operator or a body that is not two numbers with `400`.
     - Add `GET /api/history` answering `200` with the saved calculations, newest first.
@@ -24,7 +24,7 @@
     - _Files: server/main.py, server/db.py, server/calculations.py, server/tests/test_calculations.py_
     - _Verify: npm run test --workspace server -- calculations_
     - _Issue: #2_
-  - [ ] 1.3 Web app: the calculator screen
+  - [x] 1.3 Web app: the calculator screen
     - Build `CalculatorScreen` with the display above a 4-column keypad of digit buttons 0 to 9, `.`, `+`, `−`, `×`, `÷`, `=` and `C`, and a message line under the display.
     - Keep the first number, the operator and the second number in state: digits append to the display, an operator keeps the first number and empties the display, `=` calls `saveCalculation` and shows the result, `C` empties the display and forgets the first number and the operator.
     - Show "Division by zero is not allowed" on the display when the API refuses, and keep the result with "Calculation not saved" beside the history list when the save fails.
